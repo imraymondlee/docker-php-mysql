@@ -1,0 +1,34 @@
+version: '3'
+services:
+  web:
+    build: .
+    container_name: php73mysqlipdo
+    volumes:
+      - ./php:/var/www/html/
+    ports:
+      - 80:80
+  db:
+    container_name: mysql80
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: php-db
+      MYSQL_USER: useruser
+      MYSQL_PASSWORD: passpass
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+  phpmyadmin:
+    container_name: phpmyadmin48
+    image: phpmyadmin/phpmyadmin:4.8
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: useruser
+      PMA_PASSWORD: passpass
+    restart: always
+    ports:
+      - 8080:80
